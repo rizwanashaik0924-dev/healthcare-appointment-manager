@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Doctor Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            Doctor Dashboard
+        </h1>
+
+        <div class="form-box">
+
+            <h2>
+                Welcome Dr. John
+            </h2>
+
+            <p>
+                View and manage your appointments.
+            </p>
+
+        </div>
+
+
+        <div class="form-box">
+
+            <h2>
+                My Appointments
+            </h2>
+
+            <button
+                onclick="loadDoctorAppointments()"
+            >
+                Load Appointments
+            </button>
+
+            <div
+                id="appointmentsList"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Healthcare Appointment & Follow-up Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN ================= -->
+
+    <div id="loginPage" class="page">
+
+        <div class="container">
+
+            <h1>Healthcare Manager</h1>
+
+            <h2>Login</h2>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email"
+            >
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+            >
+
+            <button onclick="login()">
+                Login
+            </button>
+
+            <p id="loginMessage"></p>
+
+            <hr>
+
+            <h2>Register</h2>
+
+            <input
+                type="text"
+                id="registerName"
+                placeholder="Full Name"
+            >
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="Email"
+            >
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Password"
+            >
+
+            <select id="registerRole">
+
+                <option value="patient">
+                    Patient
+                </option>
+
+                <option value="doctor">
+                    Doctor
+                </option>
+
+            </select>
+
+            <button onclick="register()">
+                Register
+            </button>
+
+            <p id="registerMessage"></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PATIENT PORTAL ================= -->
+
+    <div id="patientPage" class="page hidden">
+
+        <div class="dashboard">
+
+            <h1>
+                Welcome <span id="patientName"></span>
+            </h1>
+
+            <p>
+                Patient Portal
+            </p>
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+            <hr>
+
+            <h2>Book Appointment</h2>
+
+            <label>Doctor</label>
+
+            <select id="patientDoctor">
+                <option value="">
+                    Select Doctor
+                </option>
+            </select>
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                id="appointmentDate"
+            >
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                id="appointmentTime"
+            >
+
+            <label>Symptoms</label>
+
+            <textarea
+                id="symptoms"
+                placeholder="Describe your symptoms"
+            ></textarea>
+
+            <button onclick="bookAppointment()">
+                Book Appointment
+            </button>
+
+            <p id="appointmentMessage"></p>
+
+            <hr>
+
+            <h2>My Appointments</h2>
+
+            <button onclick="loadPatientAppointments()">
+                Load My Appointments
+            </button>
+
+            <div id="patientAppointments"></div>
+
+            <hr>
+
+            <h2>My Visit Summaries</h2>
+
+            <button onclick="loadVisitSummaries()">
+                Load Visit Summaries
+            </button>
+
+            <div id="visitSummaries"></div>
+
+            <hr>
+
+            <h2>My Medications</h2>
+
+            <button onclick="loadMedications()">
+                Load Medications
+            </button>
+
+            <div id="medications"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DOCTOR PORTAL ================= -->
+
+    <div id="doctorPage" class="page hidden">
+
+        <div class="dashboard">
+
+            <h1>
+                Welcome <span id="doctorName"></span>
+            </h1>
+
+            <p>
+                Doctor Portal
+            </p>
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+            <hr>
+
+            <h2>My Appointments</h2>
+
+            <button onclick="loadDoctorAppointments()">
+                Load Appointments
+            </button>
+
+            <div id="doctorAppointments"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ADMIN PORTAL ================= -->
+
+    <div id="adminPage" class="page hidden">
+
+        <div class="dashboard">
+
+            <h1>
+                Welcome <span id="adminName"></span>
+            </h1>
+
+            <p>
+                Administrator Portal
+            </p>
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+            <hr>
+
+
+            <!-- DOCTORS -->
+
+            <h2>Doctor Management</h2>
+
+            <button onclick="loadDoctors()">
+                Load Doctors
+            </button>
+
+            <div id="doctorsList"></div>
+
+            <hr>
+
+
+            <!-- ADD DOCTOR -->
+
+            <h2>Add Doctor</h2>
+
+            <input
+                type="text"
+                id="doctorName"
+                placeholder="Doctor Name"
+            >
+
+            <input
+                type="email"
+                id="doctorEmail"
+                placeholder="Doctor Email"
+            >
+
+            <input
+                type="password"
+                id="doctorPassword"
+                placeholder="Password"
+            >
+
+            <input
+                type="text"
+                id="doctorSpecialisation"
+                placeholder="Specialisation"
+            >
+
+            <label>
+                Working Start
+            </label>
+
+            <input
+                type="time"
+                id="workingStart"
+            >
+
+            <label>
+                Working End
+            </label>
+
+            <input
+                type="time"
+                id="workingEnd"
+            >
+
+            <label>
+                Slot Duration (minutes)
+            </label>
+
+            <input
+                type="number"
+                id="slotDuration"
+                value="30"
+            >
+
+            <button onclick="addDoctor()">
+                Add Doctor
+            </button>
+
+            <p id="doctorMessage"></p>
+
+            <hr>
+
+
+            <!-- DOCTOR LEAVE -->
+
+            <h2>Doctor Leave Management</h2>
+
+            <select id="leaveDoctor">
+
+                <option value="">
+                    Select Doctor
+                </option>
+
+            </select>
+
+            <label>
+                Leave Date
+            </label>
+
+            <input
+                type="date"
+                id="leaveDate"
+            >
+
+            <input
+                type="text"
+                id="leaveReason"
+                placeholder="Reason for leave"
+            >
+
+            <button onclick="addLeave()">
+                Add Leave
+            </button>
+
+            <p id="leaveMessage"></p>
+
+            <hr>
+
+
+            <!-- ADMIN APPOINTMENTS -->
+
+            <h2>All Appointments</h2>
+
+            <button onclick="loadAllAppointments()">
+                Load Appointments
+            </button>
+
+            <div id="adminAppointments"></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

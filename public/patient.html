@@ -1,0 +1,444 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Portal - Healthcare Manager</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #1976d2;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        header button {
+            background: white;
+            color: #1976d2;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            margin-top: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #125ca5;
+        }
+
+        .slot-button {
+            margin: 8px 8px 8px 0;
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #1976d2;
+        }
+
+        .slot-button:hover {
+            background: #bbdefb;
+        }
+
+        .selected-slot {
+            background: #1976d2 !important;
+            color: white !important;
+        }
+
+        .appointment-card,
+        .visit-summary-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .appointment-card h3,
+        .visit-summary-card h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .logout {
+            background: #d32f2f;
+        }
+
+        .logout:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <h1 id="welcomeTitle">
+            Welcome Patient
+        </h1>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            Logout
+        </button>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- =========================================
+             PATIENT INFORMATION
+        ========================================== -->
+
+        <div class="card">
+
+            <h2>Patient Portal</h2>
+
+            <div class="info">
+
+                <p>
+                    View your appointments, book new appointments,
+                    and check your visit summaries.
+                </p>
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="patientName">
+                        Loading...
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <span id="patientEmail">
+                        Loading...
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             BOOK APPOINTMENT
+        ========================================== -->
+
+        <div class="card">
+
+            <h2>Book Appointment</h2>
+
+
+            <label for="doctorId">
+                Select Doctor
+            </label>
+
+            <select
+                id="doctorId"
+                onchange="loadAvailableSlots()">
+
+                <option value="">
+                    Select Doctor
+                </option>
+
+            </select>
+
+
+            <label for="appointmentDate">
+                Select Date
+            </label>
+
+            <input
+                type="date"
+                id="appointmentDate"
+                onchange="loadAvailableSlots()"
+            >
+
+
+            <h3>
+                Available Slots
+            </h3>
+
+
+            <div id="availableSlots">
+
+                <p>
+                    Please select a doctor and date.
+                </p>
+
+            </div>
+
+
+            <input
+                type="hidden"
+                id="appointmentTime"
+            >
+
+
+            <label for="symptoms">
+                Symptoms
+            </label>
+
+            <textarea
+                id="symptoms"
+                placeholder="Describe your symptoms before the appointment..."
+            ></textarea>
+
+
+            <button
+                onclick="bookAppointment()">
+
+                Book Appointment
+
+            </button>
+
+
+            <p
+                id="appointmentMessage"
+                class="message">
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             MY APPOINTMENTS
+        ========================================== -->
+
+        <div class="card">
+
+            <h2>
+                My Appointments
+            </h2>
+
+
+            <button
+                onclick="loadPatientAppointments()">
+
+                Load My Appointments
+
+            </button>
+
+
+            <div
+                id="patientAppointments">
+
+                <p>
+                    Click the button to load your appointments.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             MY VISIT SUMMARIES
+        ========================================== -->
+
+        <div class="card">
+
+            <h2>
+                My Visit Summaries
+            </h2>
+
+
+            <button
+                onclick="loadVisitSummaries()">
+
+                Load Visit Summaries
+
+            </button>
+
+
+            <div
+                id="visitSummaries">
+
+                <p>
+                    Click the button to load your visit summaries.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =============================================
+         JAVASCRIPT
+    ============================================== -->
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+        // =========================================
+        // LOAD PATIENT INFORMATION
+        // =========================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const savedUser =
+                    localStorage.getItem(
+                        "healthUser"
+                    );
+
+
+                if (!savedUser) {
+
+                    window.location.href =
+                        "/index.html";
+
+                    return;
+                }
+
+
+                try {
+
+                    const user =
+                        JSON.parse(savedUser);
+
+
+                    if (user.role !== "patient") {
+
+                        window.location.href =
+                            "/index.html";
+
+                        return;
+                    }
+
+
+                    document.getElementById(
+                        "welcomeTitle"
+                    ).textContent =
+                        `Welcome ${user.name}`;
+
+
+                    document.getElementById(
+                        "patientName"
+                    ).textContent =
+                        user.name;
+
+
+                    document.getElementById(
+                        "patientEmail"
+                    ).textContent =
+                        user.email;
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    localStorage.removeItem(
+                        "healthUser"
+                    );
+
+                    window.location.href =
+                        "/index.html";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+```
