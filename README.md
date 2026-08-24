@@ -105,7 +105,7 @@ The Healthcare Appointment & Follow-up Manager provides more than basic appointm
 
 ## Project Structure
 
-`text
+text
 healthcare-appointment-manager/
 │
 ├── public/
